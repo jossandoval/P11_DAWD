@@ -1,0 +1,23 @@
+# Node modules
+angular-app/node_modules/
+
+# Python virtual environments
+python-app/venv/
+python-app/.venv/
+
+# IDE files
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*~
+
+# npm
+package-lock.json
+npm-debug.log*

@@ -1,0 +1,202 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{verbatim}
+
+% Configuración de página
+\geometry{a4paper, margin=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Configuración de encabezados
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Práctica Git - DAWD}
+\lhead{Sistema de Gestión de Notas}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{titlepage}
+    % Logos en las esquinas superiores
+    \begin{center}
+        \begin{tabular}{@{}p{0.3\textwidth}@{}p{0.5\textwidth}@{}p{0.3\textwidth}@{}}
+            \includegraphics[width=0.2\textwidth]{logo_unam.png} & 
+            \hfill &
+            \includegraphics[width=0.15\textwidth]{logo_iimas.png}
+        \end{tabular}
+    \end{center}
+    
+    \vspace*{1cm}
+    
+    % Título principal
+    \begin{center}
+        {\Huge \textbf{Universidad Nacional Autónoma de México}}\\[0.5cm]
+        {\Large \textbf{Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas}}\\[2cm]
+        
+        {\huge \textbf{Práctica 6}}\\[0.5cm]
+        {\LARGE Control de Versiones con Git y GitHub}\\[1.5cm]
+        
+        {\Large \textbf{Alumno:}}\\[0.3cm]
+        {\Large Erick José Fabián Sandoval}\\[1cm]
+        
+        {\Large \textbf{Asignatura:}}\\[0.3cm]
+        {\Large Desarrollo de Aplicaciones Web D.}\\[1cm]
+        
+        {\Large \textbf{Profesor:}}\\[0.3cm]
+        {\Large Israel Sandoval Grajeda}\\[1.5cm]
+
+        {\Large  \url{https://github.com/erick0x/P6_DAWD}} \\[1cm]
+        
+        \vfill
+        {\large \today}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+Este informe documenta la práctica de pruebas unitarias realizadas para una aplicación Angular y un módulo Python. El objetivo es demostrar el desarrollo de casos de prueba que validan la conexión a un servicio web en Angular y la conexión a una base de datos en Python.
+
+\subsection{Objetivos}
+\begin{itemize}
+    \item Desarrollar una prueba unitaria en Angular para verificar la conexión a un web service.
+    \item Desarrollar una prueba unitaria en Python para validar la conexión a una base de datos.
+    \item Mantener la portada original del documento.
+\end{itemize}
+
+\section{Metodología}
+La práctica se realizó en dos etapas principales:
+\begin{enumerate}
+    \item Implementación del servicio y la prueba unitaria en Angular.
+    \item Implementación del módulo de conexión y la prueba unitaria en Python.
+\end{enumerate}
+En ambos casos se utilizó un archivo de prueba separado del código fuente, tal como se solicita en la especificación de la práctica.
+
+\section{Prueba unitaria en Angular}
+La aplicación Angular creada contiene un servicio que prueba la conexión a un web service público. El componente principal invoca este servicio y actualiza un estado interno que indica si la conexión fue exitosa.
+
+\subsection{Código de la prueba}
+La prueba se encuentra en el archivo \texttt{src/app/app.spec.ts}. Se utilizan los siguientes elementos:
+\begin{itemize}
+    \item \texttt{TestBed} para configurar el entorno de pruebas.
+    \item \texttt{HttpClientTestingModule} para simular las peticiones HTTP.
+    \item \texttt{HttpTestingController} para controlar las respuestas mock.
+\end{itemize}
+
+\subsection{Casos evaluados}
+\begin{itemize}
+    \item \textbf{Conexión exitosa}: cuando el servicio responde correctamente, el estado se actualiza a \texttt{online}.
+    \item \textbf{Conexión fallida}: cuando ocurre un error de red, el estado se actualiza a \texttt{offline}.
+\end{itemize}
+
+\subsection{Resultado de ejecución}
+La prueba Angular se ejecutó con el comando:
+\begin{verbatim}
+cd angular-app
+npx ng test --watch=false
+\end{verbatim}
+
+\noindent La salida mostrada fue:
+\begin{verbatim}
+✓  angular-app  src/app/app.spec.ts (3 tests)
+   ✓ App (3)
+     ✓ should create the app
+     ✓ should set status online when web service responds successfully
+     ✓ should set status offline when web service returns an error
+\end{verbatim}
+
+\section{Prueba unitaria en Python}
+El módulo Python implementa una clase de conexión a una base de datos SQLite. La prueba unitaria se realizó en un archivo separado para garantizar la limpieza entre el código fuente y las pruebas.
+
+\subsection{Código de la prueba}
+La prueba se encuentra en el archivo \texttt{python-app/test_database.py} y utiliza el módulo \texttt{unittest}. Las operaciones cubiertas incluyen:
+\begin{itemize}
+    \item Conexión a la base de datos.
+    \item Desconexión.
+    \item Creación de tabla.
+    \item Inserción de datos.
+    \item Consulta de datos.
+    \item Manejo de casos sin conexión.
+\end{itemize}
+
+\subsection{Resultado de ejecución}
+La prueba Python se ejecutó con el comando:
+\begin{verbatim}
+cd python-app
+python -m unittest test_database.py -v
+\end{verbatim}
+
+\noindent La salida mostrada fue:
+\begin{verbatim}
+test_connect_successful (test_database.TestDatabaseConnection) ... ok
+test_create_table (test_database.TestDatabaseConnection) ... ok
+test_disconnect_successful (test_database.TestDatabaseConnection) ... ok
+test_insert_data (test_database.TestDatabaseConnection) ... ok
+test_insert_without_connection_returns_false (test_database.TestDatabaseConnection) ... ok
+test_query_data (test_database.TestDatabaseConnection) ... ok
+test_query_without_connection_returns_none (test_database.TestDatabaseConnection) ... ok
+\end{verbatim}
+
+\section{Resultados generales}
+Ambas pruebas unitarias se ejecutaron correctamente y cumplieron el propósito de validar las conexiones en cada entorno:
+\begin{itemize}
+    \item La prueba Angular verifica la comunicación con un servicio web externo mediante un mock HTTP.
+    \item La prueba Python verifica la conexión a una base de datos SQLite y el comportamiento ante operaciones básicas.
+\end{itemize}
+
+\section{Conclusiones}
+La práctica demuestra que es posible implementar pruebas unitarias en diferentes lenguajes y plataformas manteniendo una estructura de código clara. En Angular se utilizó un servicio con una prueba separada en el archivo \texttt{app.spec.ts}; en Python se empleó un archivo de prueba independiente para validar la conexión y operaciones a la base de datos.
+
+\section{Anexos}
+\begin{itemize}
+    \item Archivo de prueba Angular: \texttt{angular-app/src/app/app.spec.ts}
+    \item Servicio Angular: \texttt{angular-app/src/app/web.service.ts}
+    \item Código Python de conexión: \texttt{python-app/database.py}
+    \item Prueba Python: \texttt{python-app/test_database.py}
+\end{itemize}
+
+
+\subsection{Resultados Obtenidos}
+\begin{itemize}
+    \item Se implementaron exitosamente las 5 operaciones fundamentales de Git
+    \item Se desarrolló una aplicación web funcional con HTML, CSS y JavaScript
+    \item Se mantuvo un historial de versiones organizado con 4 commits
+    \item Se demostró el flujo de trabajo con ramas (branching strategy)
+    \item El repositorio remoto contiene el código completo y documentación
+\end{itemize}
+
+\subsection{Comandos Git Utilizados}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Comando} & \textbf{Propósito} \\
+        \hline
+        git init & Inicializar repositorio local \\
+        git add & Agregar archivos al staging \\
+        git commit & Crear commit con cambios \\
+        git checkout -b & Crear y cambiar a nueva rama \\
+        git merge & Fusionar ramas \\
+        git branch -d & Eliminar rama \\
+        git push & Subir cambios al remoto \\
+        git log --oneline --graph & Ver historial gráfico \\
+        git remote -v & Ver repositorios remotos \\
+        \hline
+    \end{tabular}
+    \caption{Comandos Git utilizados en la práctica}
+\end{table}
+
+\subsection{Referencias}
+\begin{itemize}
+    \item Repositorio del proyecto: \url{https://github.com/erick0x/P6_DAWD}
+    \item Documentación oficial de Git: \url{https://git-scm.com/doc}
+\end{itemize}
+
+\end{document}
